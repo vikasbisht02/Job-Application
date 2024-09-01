@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 // For Development Purpose
-const API_URL = "http://localhost:5000";
+const API_URL = "https://job-application-server-0i5f.onrender.com";
 
 axios.defaults.withCredentials = true;
 

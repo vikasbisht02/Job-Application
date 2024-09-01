@@ -30,7 +30,7 @@ const DashboardPage = () => {
 
       try {
         const result = await axios.post(
-          "http://localhost:5000/upload-files",
+          "https://job-application-server-0i5f.onrender.com/upload-files",
           formData,
           {
             headers: {
