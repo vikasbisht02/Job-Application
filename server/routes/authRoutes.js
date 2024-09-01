@@ -1,6 +1,6 @@
 const express = require("express");
 const { signup, uploadFile } = require("../controllers/authController");
-const upload = require("../config/multer");
+const upload = require("../config/multer.js");
 
 const router = express.Router();
 

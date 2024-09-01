@@ -1,6 +1,6 @@
 const bcryptjs = require("bcryptjs");
-const User = require("../models/userModel");
-const PdfDetails = require("../models/PdfDetails");
+const User = require("../models/userModel.js");
+const PdfDetails = require("../models/pdfDetails.js");
 
 module.exports.signup = async (req, res) => {
   const { email, password, name } = req.body;
