@@ -3,8 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./db/connectDB.js");
-const authRoutes = require("./routes/authRoutes.js");
-
+const authRoutes = require("./routes/authRoutes");
 
 dotenv.config();
 
@@ -24,9 +23,13 @@ app.use("/files", express.static("files"));
 // Routes
 app.use("/", authRoutes);
 
-
 // Start Server
-app.listen(PORT, () => {
-  connectDB();
-  console.log("Server is running on port:", PORT);
+app.listen(PORT, async () => {
+  try {
+    await connectDB();
+    console.log("Server is running on port:", PORT);
+  } catch (error) {
+    console.error("Failed to connect to MongoDB", error);
+    process.exit(1);
+  }
 });

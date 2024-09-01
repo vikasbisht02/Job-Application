@@ -1,9 +1,6 @@
 const bcryptjs = require("bcryptjs");
-const dotenv = require("dotenv");
-dotenv.config();
-
-const User = require("../models/userModel.js");
-const PdfDetails = require("../models/PdfDetails.js");
+const User = require("../models/userModel");
+const PdfDetails = require("../models/PdfDetails");
 
 module.exports.signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -16,9 +13,7 @@ module.exports.signup = async (req, res) => {
     const userAlreadyExists = await User.findOne({ email });
 
     if (userAlreadyExists) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User already exists" });
+      return res.status(400).json({ success: false, message: "User already exists" });
     }
 
     const hashedPassword = await bcryptjs.hash(password, 10);
@@ -51,10 +46,9 @@ module.exports.uploadFile = async (req, res) => {
 
   try {
     const pdfRecord = await PdfDetails.create({ name, email, pdf: fileName });
-    res
-      .status(200)
-      .json({ status: "ok", message: "Data uploaded successfully" });
+    res.status(200).json({ success: true, message: "Data uploaded successfully" });
   } catch (error) {
-    res.status(500).json({ status: error.message });
+    console.error("Upload error:", error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
