@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { useAuthStore } from "../store/authStore";
 import { useState, useEffect } from "react";
@@ -5,6 +6,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import ProfileForm from "../components/ProfileForm";
 import FileUpload from "../components/FileUpload";
+import { Loader } from "lucide-react"; // Import loader
 
 const DashboardPage = () => {
   const { user } = useAuthStore();
@@ -12,6 +14,7 @@ const DashboardPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [file, setFile] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   useEffect(() => {
     if (user) {
@@ -27,6 +30,8 @@ const DashboardPage = () => {
       formData.append("name", name);
       formData.append("email", email);
       formData.append("avatar", file);
+
+      setIsLoading(true); // Start loading
 
       try {
         const result = await axios.post(
@@ -44,6 +49,8 @@ const DashboardPage = () => {
       } catch (error) {
         toast.error("File upload failed");
         console.error("File upload failed", error);
+      } finally {
+        setIsLoading(false); // Stop loading
       }
     } else {
       toast.error("Please fill all fields before submitting");
@@ -74,7 +81,7 @@ const DashboardPage = () => {
             />
           </div>
 
-          <FileUpload setFile={setFile} submitData={submitData} />
+          <FileUpload setFile={setFile} submitData={submitData} isLoading={isLoading} />
         </form>
       </motion.div>
     </div>
