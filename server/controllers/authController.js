@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const User = require("../models/userModel.js");
-
+const PdfDetails = require("../models/PdfDetails.js");
 
 module.exports.signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -22,18 +22,14 @@ module.exports.signup = async (req, res) => {
     }
 
     const hashedPassword = await bcryptjs.hash(password, 10);
-   
 
     const user = new User({
       email,
       password: hashedPassword,
       name,
-     
     });
 
     await user.save();
-
-
 
     res.status(201).json({
       success: true,
@@ -46,5 +42,19 @@ module.exports.signup = async (req, res) => {
   } catch (error) {
     console.error("Signup error:", error);
     res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+module.exports.uploadFile = async (req, res) => {
+  const fileName = req.file.filename;
+  const { name, email } = req.body;
+
+  try {
+    const pdfRecord = await PdfDetails.create({ name, email, pdf: fileName });
+    res
+      .status(200)
+      .json({ status: "ok", message: "Data uploaded successfully" });
+  } catch (error) {
+    res.status(500).json({ status: error.message });
   }
 };
