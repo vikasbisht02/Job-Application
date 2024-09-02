@@ -6,6 +6,7 @@ import SignUpPage from "./pages/SignUpPage";
 import DashboardPage from "./pages/DashboardPage";
 
 import { Toaster } from "react-hot-toast";
+import SubmitPage from "./pages/SubmitPage";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
 
       <Routes>
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/submit" element={<SubmitPage />} />
         <Route path="/" element={<SignUpPage />} />
         {/* catch all routes */}
         <Route path="*" element={<Navigate to="/" replace />} />
