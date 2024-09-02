@@ -7,6 +7,8 @@ import { toast } from "react-hot-toast";
 import ProfileForm from "../components/ProfileForm";
 import FileUpload from "../components/FileUpload";
 import { Loader } from "lucide-react"; // Import loader
+import { Link, useNavigate } from "react-router-dom";
+import SubmitPage from "./SubmitPage"
 
 const DashboardPage = () => {
   const { user } = useAuthStore();
@@ -15,6 +17,7 @@ const DashboardPage = () => {
   const [email, setEmail] = useState("");
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -46,6 +49,7 @@ const DashboardPage = () => {
 
         toast.success("File uploaded successfully!");
         console.log(result.data);
+        navigate("/SubmitPage");
       } catch (error) {
         toast.error("File upload failed");
         console.error("File upload failed", error);
