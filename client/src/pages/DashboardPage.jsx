@@ -46,16 +46,18 @@ const DashboardPage = () => {
             },
           }
         );
-
+      
         toast.success("File uploaded successfully!");
         console.log(result.data);
-        navigate("/SubmitPage");
+        console.log("Navigating to SubmitPage..."); // Debugging log
+        navigate("/submit"); // Ensure this matches the route path
       } catch (error) {
         toast.error("File upload failed");
         console.error("File upload failed", error);
       } finally {
         setIsLoading(false); // Stop loading
       }
+      
     } else {
       toast.error("Please fill all fields before submitting");
       console.error("Please fill all fields before submitting");
